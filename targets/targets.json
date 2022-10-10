@@ -3884,6 +3884,14 @@
             "0350"
         ]
     },
+    "XDOT_MAX32670": {
+        "inherits": [
+            "MAX32670"
+        ],
+        "detect_code": [
+            "0117"
+        ]
+    },
     "FF1705_L151CC": {
         "inherits": [
             "XDOT_L151CC"
