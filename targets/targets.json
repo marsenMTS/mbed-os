@@ -3889,7 +3889,7 @@
             "MAX32670"
         ],
         "detect_code": [
-            "0117"
+            "0351"
         ]
     },
     "FF1705_L151CC": {
@@ -6250,6 +6250,7 @@
             "Target"
         ],
         "public": false,
+        "device_name": "MAX32670",
         "core": "Cortex-M4F",
         "macros": [
             "TARGET=MAX32670",
@@ -6264,6 +6265,7 @@
             "GCC_ARM",
             "ARM"
         ],
+        "bootloader_supported": true,
         "device_has": [
             "SERIAL",
             "SERIAL_FC",
