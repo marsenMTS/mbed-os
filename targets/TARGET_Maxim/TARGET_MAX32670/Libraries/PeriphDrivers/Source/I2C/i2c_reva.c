@@ -100,6 +100,9 @@ int MXC_I2C_RevA_Init (mxc_i2c_reva_regs_t* i2c, int masterMode, unsigned int sl
         states[MXC_I2C_GET_IDX ((mxc_i2c_regs_t*) i2c)].master = 1;
     }
 
+    // Per mbed API, init with 100KHz
+    MXC_I2C_SetFrequency(i2c, 100000);
+
     return E_NO_ERROR;
 }
 
