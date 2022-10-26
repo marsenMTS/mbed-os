@@ -5,7 +5,7 @@
 #include "gcr_regs.h"
 #include "mxc_sys.h"
 
-#define XDOT_ERFO_FREQ      24000000;
+#define XDOT_ERFO_FREQ      32000000;
 
 void SystemCoreClockUpdate(void)
 {
@@ -55,10 +55,7 @@ void SystemCoreClockUpdate(void)
 
 int PreInit(void)
 {
-    /*
-     *  Switch to ERFO here instead of SystemInit
-     */
-    MXC_SYS_Clock_Select(MXC_SYS_CLOCK_ERFO);
+
     return 0;
 }
 
@@ -82,6 +79,7 @@ void SystemInit(void)
      * with flashing the device. Could be a daplink issue, but
      * switching to ERFO in PreInit solves for this 
      */
+    MXC_SYS_Clock_Select(MXC_SYS_CLOCK_ERFO);
     SystemCoreClockUpdate();
 
     MXC_SYS_ClockEnable(MXC_SYS_PERIPH_CLOCK_GPIO0); 
