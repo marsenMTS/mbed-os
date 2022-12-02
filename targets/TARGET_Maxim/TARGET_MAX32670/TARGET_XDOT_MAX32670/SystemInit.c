@@ -5,7 +5,7 @@
 #include "gcr_regs.h"
 #include "mxc_sys.h"
 
-#define XDOT_ERFO_FREQ      32000000;
+#define XDOT_ERFO_FREQ      24000000    // Change to 24000000 for xDot 1.5 Rev A
 
 void SystemCoreClockUpdate(void)
 {
@@ -55,7 +55,6 @@ void SystemCoreClockUpdate(void)
 
 int PreInit(void)
 {
-
     return 0;
 }
 
@@ -73,12 +72,6 @@ void SystemInit(void)
     __ISB();
 #endif
 
-    /* Change system clock source to the main high-speed clock 
-     * This is where the SDK switches to IPO. Switching to ERFO
-     * here works, but each program execution needs a POR, same
-     * with flashing the device. Could be a daplink issue, but
-     * switching to ERFO in PreInit solves for this 
-     */
     MXC_SYS_Clock_Select(MXC_SYS_CLOCK_ERFO);
     SystemCoreClockUpdate();
 
