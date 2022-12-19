@@ -13,34 +13,36 @@ void WriteByte(uint16_t addr, uint8_t* buf)
     seq[1] = char(addr & 0xFF);     // Lower Address Byte
     seq[2] = buf[0];                // Data Byte
 
-    mpe.write(0);                   // MEM_PWR_EN active low, turn on EEPROM
+    // mpe.write(0);                   // MEM_PWR_EN active low, turn on EEPROM
     WriteEnable();                  // Turn off write protection
 
     i2c0.write(address, seq, 3);    // Write data
 
     WriteDisable();                 // Turn on write protection
 
-    mpe.write(1);                   // Turn off EEPROM
+    // mpe.write(1);                   // Turn off EEPROM
 }
 
 void ReadByte(uint16_t addr, uint8_t* buf)
 {
     char data;
 
-    mpe.write(0);                   // MEM_PWR_EN active low
+    // mpe.write(0);                   // MEM_PWR_EN active low
 
     SetReadAddress(addr);
     i2c0.read(address, &data, 1);
     buf[0] = data;
 
-    mpe.write(1);
+    // mpe.write(1);
 }
 
 void WaitForChip()
 {
     while(i2c0.read(address, 0x00, 1, false) != 0)
     {
-        ThisThread::sleep_for(1ms);
+        mpe.write(0);
+        ThisThread::sleep_for(3ms);
+        // printf("Waiting\r\n");
     }
 }
 
@@ -128,8 +130,8 @@ int xdot_eeprom_write_buf(uint32_t addr, uint8_t *buf, uint32_t size)
         ReadByte(addr + bytes_written, &data_read);
         if(data_read != buf[bytes_written]) 
         {
-            uint8_t position = addr + bytes_written;
-            WriteByte(addr + bytes_written, buf + bytes_written);
+            uint16_t position = addr + bytes_written;
+            WriteByte(position, buf + bytes_written);
         }
         bytes_written += 1;
     }
