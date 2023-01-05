@@ -6265,7 +6265,7 @@
             "GCC_ARM",
             "ARM"
         ],
-        "bootloader_supported": true,
+        "bootloader_supported": false,
         "device_has": [
             "SERIAL",
             "SERIAL_FC",
