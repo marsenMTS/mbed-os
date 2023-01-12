@@ -69,23 +69,13 @@ typedef enum {
 #if defined(MBED_CONF_TARGET_STDIO_UART_TX)
     CONSOLE_TX   = MBED_CONF_TARGET_STDIO_UART_TX,
 #else
-
-#if defined(XDOTREVA)
     CONSOLE_TX   = P0_29,
-#else
-    CONSOLE_TX   = P0_9,
-#endif // XDOTREVA
 #endif // MBED_CONF_TARGET_STDIO_UART_TX
 
 #if defined(MBED_CONF_TARGET_STDIO_UART_RX)
     CONSOLE_RX   = MBED_CONF_TARGET_STDIO_UART_RX,
 #else
-
-#if defined(XDOTREVA)
     CONSOLE_RX   = P0_28,
-#else
-    CONSOLE_RX   = P0_8,
-#endif // XDOTREVA
 #endif // MBED_CONF_TARGET_STDIO_UART_RX
 
     STDIO_UART_TX  = CONSOLE_TX,
@@ -170,7 +160,6 @@ typedef enum {
     UART3_RTS = LPUART0_RTS,
 
 // xDot 1.5 Pin Definitions
-#if defined(XDOTREVA)
     // DK Definitions
     // GPIO
     WAKE        = P0_19,
@@ -192,23 +181,6 @@ typedef enum {
     // xDot Definitions
     MEM_PWR_EN  = P0_24,     // Enable EEPROM_SE I2C bus, active low
     FLASH_CS    = P0_23,
-#else
-    // DK Definitions
-    // GPIO - these will change on Rev A
-    WAKE        = P0_19,
-    GPIO0       = P0_30,
-    GPIO1       = P0_29,
-    GPIO2       = P0_28,
-    GPIO3       = P0_27,
-    // SPI
-    SPI_MISO    = P0_2,
-    SPI_MOSI    = P0_3,
-    SPI_SCK     = P0_4,
-    SPI_NSS     = P0_5,
-    
-    // xDot Definitions
-    MEM_PWR_EN  = P0_23,     // Enable EEPROM_SE I2C bus, active low
-#endif // XDOTREVA
 
     // EEPROM and SE I2C
     SE_SDA      = I2C0_SDA,
