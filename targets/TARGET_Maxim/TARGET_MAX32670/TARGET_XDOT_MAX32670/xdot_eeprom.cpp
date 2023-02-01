@@ -159,3 +159,18 @@ int xdot_eeprom_read_buf(uint32_t addr, uint8_t *buf, uint32_t size)
 
     return 0;
 }
+
+int EraseChip(void)
+{
+    uint8_t* buffer;
+    buffer = new uint8_t[PAGE_SIZE];
+
+    memset(buffer, 0, PAGE_SIZE);
+    for(uint16_t i = 0; i < NUM_PAGES; i++)
+    {
+        PageWrite(i*PAGE_SIZE, buffer, PAGE_SIZE);
+    }
+	delete buffer;
+
+    return 0;
+}

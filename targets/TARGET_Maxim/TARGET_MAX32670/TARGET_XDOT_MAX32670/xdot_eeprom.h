@@ -24,6 +24,7 @@
 #define ADDRESS_7   0x51
 #define PAGE_SIZE   64
 #define EEPROM_SIZE 16384
+#define NUM_PAGES   (EEPROM_SIZE)/(PAGE_SIZE)
 
 // Write Protect Bits
 #define WPL         0   // Permanently Lock EEPROM
@@ -65,5 +66,7 @@ void WriteEnable();
 // Disable write operations by configuring write protect register
 void WriteDisable();
 
+// Erase chip (used for formatting factory data)
+int EraseChip(void);
 
 #endif // __XDOT_EEPROM__H
