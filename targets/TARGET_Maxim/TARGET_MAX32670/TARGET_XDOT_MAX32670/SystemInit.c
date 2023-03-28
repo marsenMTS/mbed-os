@@ -7,7 +7,7 @@
 
 #define XDOT_ERFO_FREQ      24000000    // Change to 24000000 for xDot 1.5 Rev A
 
-void SystemCoreClockUpdate(void)
+void SystemCoreClockUpdateXdot(void)
 {
     uint32_t base_freq, div, clk_src;
 
@@ -51,6 +51,12 @@ void SystemCoreClockUpdate(void)
     div = (MXC_GCR->clkctrl & MXC_F_GCR_CLKCTRL_SYSCLK_DIV) >> MXC_F_GCR_CLKCTRL_SYSCLK_DIV_POS;
 
     SystemCoreClock = base_freq >> div;
+
+    // base_freq1 = base_freq;
+    // div1 = div;
+    // sys_core_clk1 = SystemCoreClock;
+    // tries = 25;
+
 }
 
 int PreInit(void)
@@ -72,8 +78,13 @@ void SystemInit(void)
     __ISB();
 #endif
 
-    MXC_SYS_Clock_Select(MXC_SYS_CLOCK_ERFO);
-    SystemCoreClockUpdate();
+    MXC_SYS_Clock_Select(MXC_SYS_CLOCK_IPO);
+    SystemCoreClockUpdateXdot();
+
+    // Increase drive strength of I2C_SE bus and Mem Pwr En.
+    // Note: Mem Pwr En doesn't help, higher drive strength on se i2c pins seems to though
+    MXC_GPIO0->ds0 |= (1 << 6) | (1 << 7) | (1 << 24);
+    MXC_GPIO0->ds1 |= (1 << 6) | (1 << 7) | (1 << 24);
 
     MXC_SYS_ClockEnable(MXC_SYS_PERIPH_CLOCK_GPIO0); 
     MXC_SYS_ClockEnable(MXC_SYS_PERIPH_CLOCK_GPIO1); 

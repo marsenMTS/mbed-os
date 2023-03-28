@@ -30,6 +30,7 @@ void ReadByte(uint16_t addr, uint8_t* buf)
     // mpe.write(0);                   // MEM_PWR_EN active low
 
     SetReadAddress(addr);
+    // printf("Reading a byte..\r\n");
     i2c0.read(address, &data, 1);
     buf[0] = data;
 
@@ -38,12 +39,22 @@ void ReadByte(uint16_t addr, uint8_t* buf)
 
 void WaitForChip()
 {
+    // printf("WaitForChip(): Writing mpe low\r\n");
+    mpe.write(0);
+    // printf("WaitForChip(): MXC_GPIO0->out: %d\r\n", (((MXC_GPIO0->out) >> 23) & 1));
+    // printf("WaitForChip(): Waiting 100ms\r\n");
+    // ThisThread::sleep_for(3ms);
     while(i2c0.read(address, 0x00, 1, false) != 0)
     {
+        // printf("WaitForChip(): Ack not received..\r\n");
+        // printf("WaitForChip(): Writing mpe low\r\n");
+        // printf("WaitForChip(): MXC_GPIO0->out: %d\r\n", (((MXC_GPIO0->out) >> 23) & 1));
         mpe.write(0);
-        ThisThread::sleep_for(3ms);
+        // printf("WaitForChip(): Waiting 100ms\r\n");
+        // ThisThread::sleep_for(3ms);
         // printf("Waiting\r\n");
     }
+    // printf("WaitForChip(): Ack received, continuing\r\n");
 }
 
 void SetReadAddress(uint16_t readAddr)
@@ -52,6 +63,7 @@ void SetReadAddress(uint16_t readAddr)
     seq[0] = char(readAddr >> 8);
     seq[1] = char(readAddr & 0xFF);
     WaitForChip();
+    // printf("Setting read address..\r\n");
     i2c0.write(address, seq, 2, true);
     // WaitForChip();
 }
